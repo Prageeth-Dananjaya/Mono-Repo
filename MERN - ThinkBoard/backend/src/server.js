@@ -30,5 +30,3 @@ connectDB();
 app.listen(5001, () => {
   console.log("Server started on 5001");
 });
-
-// mongodb+srv://e19431:4I9J7HpqS1MIZzNe@cluster0.tdmdwla.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
