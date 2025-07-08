@@ -1,10 +1,16 @@
 import express from "express";
 // const express = require("express");
 import notesRoutes from "./routes/notesRoutes.js";
+import { connectDB } from "./config/db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 app.use("/api/notes", notesRoutes);
+
+connectDB();
 
 // app.get("/api/notes", (req, res) => {
 //   res.status(200).send("you got 10 notes");
@@ -24,3 +30,5 @@ app.use("/api/notes", notesRoutes);
 app.listen(5001, () => {
   console.log("Server started on 5001");
 });
+
+// mongodb+srv://e19431:4I9J7HpqS1MIZzNe@cluster0.tdmdwla.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
