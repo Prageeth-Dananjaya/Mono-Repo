@@ -4,11 +4,14 @@ import {
   deleteANote,
   getAllNotes,
   updateANote,
+  getANote,
 } from "../controllers/noteController.js";
 
 const router = express.Router();
 
 router.get("/", getAllNotes);
+
+router.get("/:id", getANote);
 
 router.post("/", createANote);
 

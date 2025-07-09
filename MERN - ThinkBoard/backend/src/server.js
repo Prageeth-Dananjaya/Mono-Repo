@@ -9,9 +9,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-app.use("/api/notes", notesRoutes);
-
 connectDB();
+
+app.use(express.json());
+
+app.use("/api/notes", notesRoutes);
 
 // app.get("/api/notes", (req, res) => {
 //   res.status(200).send("you got 10 notes");
