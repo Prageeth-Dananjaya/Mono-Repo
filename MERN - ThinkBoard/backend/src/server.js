@@ -3,15 +3,25 @@ import express from "express";
 import notesRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
+import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-connectDB();
+// Middleware
+//  * Can be use for auth check before sending the response back
+//  * Can be use for rate limiting (upstash)=>  avoid larger no requests by malicious users
+//This middleware will parse JSON bodies
+app.use(express.json()); // allow access to the request body
 
-app.use(express.json());
+// app.use((req, res, next) => {
+//   console.log(`Request method is ${req.method} and request URL is ${req.url}`);
+//   next(); // This will call the controller and just before send a request log will be printed
+// });
+
+app.use(rateLimiter);
 
 app.use("/api/notes", notesRoutes);
 
@@ -30,6 +40,8 @@ app.use("/api/notes", notesRoutes);
 //   res.status(200).json({ message: "Post deleted successfully!" });
 // });
 
-app.listen(PORT, () => {
-  console.log("Server started on PORT", PORT);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("Server started on PORT", PORT);
+  });
 });
